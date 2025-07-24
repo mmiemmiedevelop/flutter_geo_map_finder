@@ -1,16 +1,8 @@
-# geo_map_finder
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<pre>
+lib/
+ ├── models/     # 데이터 모델(주소, 유저 등)
+ ├── networks/   # API 연동, 통신 코드 (ex. 네이버, Firestore)
+ ├── screens/    # UI 화면별 위젯
+ ├── utils/      # 유틸리티 함수, 공용 클래스
+ └── main.dart   # 진입점
+</pre>
