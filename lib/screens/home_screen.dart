@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'dart:async';
 import '../models/address_model.dart';
 import 'widgets/address_list.dart';
 import 'review_screen.dart';
@@ -14,13 +15,34 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final TextEditingController _searchController = TextEditingController();
+  Timer? _debounceTimer;
 
-  void _search(String query) {
-    ref.read(naverViewModelProvider.notifier).search(query);
+  void _search(String query, {bool showEmptyMessage = false}) {
+    // 빈 문자열은 api 호출 안함
+    final trimmedQuery = query.trim();
+    if (trimmedQuery.isNotEmpty) {
+      ref.read(naverViewModelProvider.notifier).search(trimmedQuery);
+    } else if (showEmptyMessage) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('검색어를 입력하세요.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  void _debouncedSearch(String query) {
+    // 디바운싱(1초 뒤에 검색 or 바로 버튼 클릭)
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(const Duration(seconds: 1), () {
+      _search(query, showEmptyMessage: false);
+    });
   }
 
   @override
   void dispose() {
+    _debounceTimer?.cancel();
     _searchController.dispose();
     super.dispose();
   }
@@ -28,7 +50,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(() => _search(_searchController.text));
+    _searchController.addListener(
+      () => _debouncedSearch(_searchController.text),
+    );
   }
 
   void _onAddressTap(Address address) {
@@ -58,11 +82,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               borderSide: BorderSide(color: Colors.grey),
             ),
           ),
-          onSubmitted: (value) => _search(value),
+          onSubmitted: (value) => _search(value, showEmptyMessage: true),
         ),
         actions: [
           IconButton(
-            onPressed: () => _search(_searchController.text),
+            onPressed: () =>
+                _search(_searchController.text, showEmptyMessage: true),
             icon: const Icon(Icons.search),
           ),
         ],
@@ -70,7 +95,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: AddressList(
         addresses: naverState.addresses ?? [],
         onRefresh: () {
-          _search(_searchController.text);
+          _search(_searchController.text, showEmptyMessage: false);
         },
         onAddressTap: _onAddressTap,
       ),
