@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/address_model.dart';
 import 'address_list_tile.dart';
+import '../../view_model/naver_view_model.dart';
 
-class AddressList extends StatelessWidget {
+class AddressList extends ConsumerWidget {
   final List<Address> addresses;
   final bool isLoading;
   final String? errorMessage;
@@ -19,7 +21,10 @@ class AddressList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    NaverState naverState = ref.watch(naverViewModelProvider);
+    List<Address> addresses = naverState.addresses ?? [];
+    
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
