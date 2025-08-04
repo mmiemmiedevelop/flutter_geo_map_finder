@@ -1,33 +1,16 @@
+
 class Review {
-  Review({
-    required this.id,
-    required this.content,
-    required this.mapX,
-    required this.mapY,
-    required this.createdAt,
-  });
-  String id;
+  Review({required this.content, required this.createdAt, required this.mapX, required   this.mapY});
+
   String content;
-  double mapX;
-  double mapY;
-  DateTime createdAt;
+  String createdAt;
+  int mapX;
+  int mapY;
 
   Review.fromJson(Map<String, dynamic> map)
-    : this(
-        id: map['id'],
-        content: map['content'],
-        mapX: map['mapX'],
-        mapY: map['mapY'],
-        createdAt: map['createdAt'],
-      );
+    : this(content: map['content'], createdAt: map['createdAt'], mapX: map['mapX'], mapY: map['mapY']);
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'content': content,
-      'mapX': mapX,
-      'mapY': mapY,
-      'createdAt': createdAt,
-    };
+    return {'content': content, 'createdAt': createdAt, 'mapX': mapX, 'mapY': mapY};
   }
 }

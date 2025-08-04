@@ -56,15 +56,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _onAddressTap(Address address) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${address.title} 선택됨'),
-        duration: const Duration(seconds: 2),
-      ),
-    );
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ReviewScreen()),
+      MaterialPageRoute(builder: (context) => ReviewScreen(address: address)),
     );
   }
 

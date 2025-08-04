@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../models/review_model.dart';
+import '../../models/address_model.dart';
 import 'review_list_tile.dart';
 
 class ReviewList extends StatelessWidget {
+  final Address address;
   final List<Review> reviews;
   final Function(Review)? onReviewTap;
   final bool isLoading;
@@ -10,6 +12,7 @@ class ReviewList extends StatelessWidget {
 
   const ReviewList({
     Key? key,
+    required this.address,
     required this.reviews,
     this.onReviewTap,
     this.isLoading = false,
@@ -61,6 +64,7 @@ class ReviewList extends StatelessWidget {
       itemBuilder: (context, index) {
         final review = reviews[index];
         return ReviewListTile(
+          address: address,
           review: review,
           onTap: onReviewTap != null ? () => onReviewTap!(review) : null,
         );

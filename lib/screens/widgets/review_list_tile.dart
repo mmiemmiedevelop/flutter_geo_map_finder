@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../models/review_model.dart';
+import '../../models/address_model.dart';
 
 class ReviewListTile extends StatelessWidget {
+  final Address address;
   final Review review;
   final VoidCallback? onTap;
 
-  const ReviewListTile({Key? key, required this.review, this.onTap})
-    : super(key: key);
+  const ReviewListTile({
+    Key? key,
+    required this.address,
+    required this.review,
+    this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +31,6 @@ class ReviewListTile extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.location_on, size: 16, color: Colors.grey),
-                const SizedBox(width: 4),
-                Text(
-                  '위도: ${review.mapX.toStringAsFixed(6)}, 경도: ${review.mapY.toStringAsFixed(6)}',
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
             Row(
               children: [
                 const Icon(Icons.access_time, size: 16, color: Colors.grey),
@@ -49,16 +43,12 @@ class ReviewListTile extends StatelessWidget {
             ),
           ],
         ),
-        trailing: const Icon(
-          Icons.arrow_forward_ios,
-          size: 16,
-          color: Colors.grey,
-        ),
       ),
     );
   }
 
-  String _formatDate(DateTime date) {
-    return '${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}';
+  String _formatDate(String date) {
+    // T를 공백으로 바꾸고 마이크로초 제거
+    return date.replaceAll('T', ' ').split('.')[0];
   }
 }
