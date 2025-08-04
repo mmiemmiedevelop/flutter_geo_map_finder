@@ -1,3 +1,14 @@
+
+# ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=flat-square&logo=flutter&logoColor=white) Geo Map Finder App by Flutter
+
+**Flutter**를 학습하기 위한 지역 검색 앱입니다.
+
+---
+
+## 🚀 주요 기능
+- **1. 네이버 검색 Open API 를 이용하여 지역 검색 기능을 구현**
+- **2. Firebase Firestore를 이용하여 해당 지역 리뷰 저장하고 불러오기**
+
 ### 🛠 사용 라이브러리
 
 - **Riverpod**  
@@ -8,7 +19,7 @@
   : `NAVER Open API`, `Firestore`, `dio`
 
 
-### 🛠 폴더 구조
+### 📂 폴더 구조
 
 <pre>
 lib/
@@ -19,3 +30,11 @@ lib/
  └── main.dart        # 진입점
 </pre>
 
+
+## ⚙️ 실행 예시
+<p align="center">
+  <img src="docs/1.png" width="100"/>
+  <img src="docs/2.png" width="100"/>
+  <img src="docs/3.png" width="100"/>
+  <img src="docs/4.png" width="100"/>
+</p>
